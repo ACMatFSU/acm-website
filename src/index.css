@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base resets ─────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    /* Smooth scroll for anchor nav */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* Cream background + ink text as site-wide defaults */
+    @apply bg-cream text-ink font-sans antialiased;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Headings use the condensed display font */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  /* Links inherit color by default — components style as needed */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Respect motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Reusable component classes ──────────────────────────────────── */
+@layer components {
+
+  /* Section wrapper: consistent horizontal padding + vertical rhythm */
+  .section-wrap {
+    @apply px-gutter py-section;
+  }
+
+  /* Thin top border that separates sections */
+  .section-rule {
+    @apply border-t border-ink;
+  }
+
+  /* Section label: "01", "02" etc. above headings */
+  .section-label {
+    @apply font-display text-section-num uppercase tracking-widest text-ink/60 mb-2;
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply inline-block bg-garnet text-chalk font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+
+  /* Ghost / outline button */
+  .btn-outline {
+    @apply inline-block bg-transparent text-ink font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:bg-ink hover:text-cream hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+
+  /* Gold accent button */
+  .btn-gold {
+    @apply inline-block bg-gold text-ink font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+
+  /* Pill / tag label */
+  .tag {
+    @apply inline-block font-mono text-xs uppercase tracking-widest
+           px-2 py-0.5 border border-ink/40;
+  }
+
+  /* Stat block used in the hero ticker row */
+  .stat-block {
+    @apply flex flex-col font-display;
+  }
+  .stat-block__value {
+    @apply text-display-lg text-garnet leading-none;
+  }
+  .stat-block__label {
+    @apply text-xs font-sans uppercase tracking-widest text-ink/60 mt-1;
+  }
+
+  /* Hard-shadow card — pillar cards, project cards */
+  .card-brutal {
+    @apply border-2 border-ink shadow-hard bg-cream
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1;
+  }
+
+  /* Inverted card — dark background */
+  .card-brutal-dark {
+    @apply border-2 border-ink shadow-hard bg-ink text-chalk
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1;
+  }
+
+  /* Marquee track (needs overflow-hidden on parent) */
+  .marquee-track {
+    @apply flex whitespace-nowrap animate-marquee;
+  }
+}
