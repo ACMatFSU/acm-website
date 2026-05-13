@@ -73,7 +73,6 @@ src/
 ├── App.tsx           # Root component — assembles the page
 ├── main.tsx          # Entry point
 ├── index.css         # Global styles and Tailwind directives
-└── ThemeShowcase.tsx # Reference component — shows how to use the theme
 ```
 
 ---
