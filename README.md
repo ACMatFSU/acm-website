@@ -72,7 +72,7 @@ src/
 ├── components/       # One file per component (your work goes here)
 ├── App.tsx           # Root component — assembles the page
 ├── main.tsx          # Entry point
-├── index.css         # Global styles and Tailwind directives
+└── index.css         # Global styles and Tailwind directives
 ```
 
 ---
@@ -101,4 +101,4 @@ See `src/ThemeShowcase.tsx` for live examples of all of these.
 
 ## Questions?
 
-Find us on Discord or open a GitHub Issue.
+Find us on Discord: Carter - rudolphc. and Thomas _viserion
