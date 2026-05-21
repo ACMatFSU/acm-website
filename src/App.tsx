@@ -1,3 +1,4 @@
+import StampBadge from "./components/Stampbadge";
 import ThemeShowcase from "./components/ThemeShowcase";
 
 function App() {
