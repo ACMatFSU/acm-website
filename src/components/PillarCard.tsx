@@ -44,4 +44,4 @@ function PillarCard({ number, title, body, bgColor }: PillarCardProps) {
   );
 }
 
-export default PillarCard;
+export default PillarCard; 
