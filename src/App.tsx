@@ -1,8 +1,8 @@
 import StampBadge from "./components/Stampbadge";
-import ThemeShowcase from "./components/ThemeShowcase";
+import HeroSection from "./components/HeroSection";
 
 function App() {
-  return <ThemeShowcase />;
+  return <HeroSection />;
 }
 
 export default App;
