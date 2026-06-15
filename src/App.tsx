@@ -1,6 +1,7 @@
 import StampBadge from "./components/Stampbadge";
 import PillarCard from "./components/PillarCard";
 import ThemeShowcase from "./components/ThemeShowcase";
+import PillarsSection from "./components/PillarsSection";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       // return{" "}
       <h1 className="text-3xl font-display underline">Hello world!</h1>
       <StampBadge />
+      <PillarsSection />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mt-8">
         <PillarCard
           number="01"
