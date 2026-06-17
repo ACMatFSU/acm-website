@@ -13,7 +13,7 @@ export default function SectionHeader({
 
   return (
     <header className={classes}>
-      <span className="section-label text-ink">{number}</span>
+      <span className="section-label text-[30px] text-ink">{number}</span>
       <h2 className="font-display text-display-xl font-bold uppercase text-ink">
         {title}
       </h2>

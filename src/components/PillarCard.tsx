@@ -3,9 +3,11 @@ interface PillarCardProps {
   title: string;
   body: string;
   bgColor: "garnet" | "gold" | "ink" | "cream";
+  clickText: string;
+  link: string;
 }
 
-function PillarCard({ number, title, body, bgColor }: PillarCardProps) {
+function PillarCard({ number, title, body, bgColor, clickText, link }: PillarCardProps) {
   const bgClasses = {
     garnet: "bg-garnet",
     gold: "bg-gold",
@@ -32,13 +34,13 @@ function PillarCard({ number, title, body, bgColor }: PillarCardProps) {
         {title}
       </h3>
 
-      <p className="mt-4 flex-grow font-sans">{body}</p>
+      <p className="mt-4 flex-grow font-mono">{body}</p>
 
       <a
-        href="#"
+        href={link}
         className="mt-6 font-display font-bold uppercase tracking-wide"
       >
-        READ →
+        {clickText} →
       </a>
     </div>
   );
