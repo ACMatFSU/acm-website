@@ -1,7 +1,10 @@
+import { joinLink } from "../assets/data/config";
+
 export default function JoinSection() {
     return (
-        <section className="section-wrap bg-ink text-chalk min-h-screen">
-            <p className="font-mono text-xs uppercase tracking-widest text-chalk/60 mb-4">✦ JOIN ✦</p>
+        <section className="section-wrap bg-ink text-chalk ">
+            {/* <p className="font-mono text-sm uppercase tracking-widest text-chalk/60 mb-4">✦ Start learning now ✦</p> */}
+            <span className="section-label text-[25px] text-chalk/60">✦ Start learning now ✦</span>
             <h2
                 className="font-display font-bold uppercase leading-none mb-8"
                 style={{
@@ -9,9 +12,9 @@ export default function JoinSection() {
                     textShadow: "4px 4px 0px #7A1C2E",
                 }}
             >
-                GET INVOLVED.
+                GET INVOLVED
             </h2>
-            <a href="#" className="btn-primary">★ Sign Me Up ★</a>
+            <a href="joinLink" className="btn-primary">Join</a>
         </section>
     );
 }
