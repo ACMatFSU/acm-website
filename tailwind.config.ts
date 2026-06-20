@@ -30,6 +30,11 @@ export default {
           DEFAULT: '#F0EAD6',  // text/elements on dark backgrounds
           muted:  '#C8BFA8',  // secondary text on dark backgrounds
         },
+        blue: {
+          DEFAULT: '#0E4C92',
+          muted: '#0080FE',
+          dark:   '#1E40AF',
+        }
       },
 
       // ── Typography ────────────────────────────────────────────────

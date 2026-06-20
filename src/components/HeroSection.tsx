@@ -7,9 +7,9 @@ import CTABar from "./CTABar";
 
 const HeroSection = () => {
   return (
-    <section className="bg-cream section-wrap relative min-h-[80vh] flex flex-col justify-center gap-8 overflow-hidden">
+    <section id="home" className="scroll-anchor bg-cream section-wrap relative min-h-[80vh] flex flex-col justify-center gap-8 overflow-hidden">
 
-      <div className="flex flex-col gap-2 max-w-4xl mx-auto w-full">
+      <div className="flex flex-col gap-2 max-w-4xl mx-auto w-full mt-2 md:mt-10">
 
         <div className="flex flex-col gap-0">
           <div className="hidden lg:block ml-[-15px]" style={{ marginBottom: "clamp(-5rem, -4.5vw, -9rem)" }}>

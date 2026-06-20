@@ -13,6 +13,25 @@
   html {
     /* Smooth scroll for anchor nav */
     scroll-behavior: smooth;
+    /* Firefox scrollbar to match brand colors, transparent track */
+    scrollbar-color: #7A1C2E transparent;
+    scrollbar-width: thin;
+  }
+
+  /* Webkit scrollbar styled like the rest of the brutalist UI: transparent track so the thumb floats on the page background */
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #7A1C2E;
+    border: 2px solid #0D0D0D;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9B2D42;
   }
 
   body {
@@ -55,6 +74,11 @@
     @apply border-t border-ink;
   }
 
+  /* Offsets anchor-scrolled sections so they don't land under the floating island */
+  .scroll-anchor {
+    @apply scroll-mt-24;
+  }
+
   /* Section label: "01", "02" etc. above headings */
   .section-label {
     @apply font-display text-section-num uppercase tracking-widest text-ink/60 mb-2;
@@ -82,12 +106,45 @@
 
   /* Gold accent button */
   .btn-gold {
-    @apply inline-block bg-gold text-ink font-display font-bold uppercase tracking-wider
+    @apply inline-block bg-gold text-white font-display font-bold uppercase tracking-wider
            px-6 py-3 border-2 border-ink
            shadow-hard
            transition-all duration-100
            hover:shadow-none hover:translate-x-1 hover:translate-y-1
            active:scale-95;
+  }
+
+  .btn-blue {
+    @apply inline-block bg-blue-600 text-white font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+  .btn-ink {
+    @apply inline-block bg-ink-muted text-white font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+  .btn-purple {
+    @apply inline-block bg-purple-600 text-white font-display font-bold uppercase tracking-wider
+           px-6 py-3 border-2 border-ink
+           shadow-hard
+           transition-all duration-100
+           hover:shadow-none hover:translate-x-1 hover:translate-y-1
+           active:scale-95;
+  }
+  .btn-rose{
+    @apply inline-block bg-rose-500 text-white font-display font-bold uppercase tracking-wider
+        px-6 py-3 border-2 border-ink
+        shadow-hard
+        transition-all duration-100
+        hover:shadow-none hover:translate-x-1 hover:translate-y-1
+        active:scale-95;
   }
 
   /* Pill / tag label */

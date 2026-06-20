@@ -15,8 +15,8 @@ interface PillarsSectionProps {
 
 export default function PillarsSection({ pillars = pillarsData }: PillarsSectionProps) {
   return (
-    <section className="section-wrap section-rule bg-garnet">
-      <SectionHeader number="02" title="Four Pillars" />
+    <section id="initiatives" className="scroll-anchor section-wrap section-rule bg-garnet">
+      <SectionHeader number="02" title="Initiatives" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mt-8">
         {pillars.map((pillar) => (
