@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import SectionHeader from "./SectionHeader"
+import React, { useMemo, useState } from "react";
 import { Leaders } from "../assets/data/config"
 /* ------------------------------------------------------------------ *
  * Leadership Tree — Binary Tree view
@@ -484,31 +483,19 @@ const CSS = `
 @keyframes ltBlink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
 `;
 
-const CANVAS_H_PADDING = 52; // matches the scroll container's "30px 26px 80px" padding (26px each side)
-
 export default function LeadershipTree() {
   const [hovered, setHovered] = useState<number | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [availableWidth, setAvailableWidth] = useState(IDEAL_TOTAL_W);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const update = () => setAvailableWidth(el.clientWidth - CANVAS_H_PADDING);
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+  // Always lay out at full (ideal) size — never shrink to fit the
+  // viewport. Narrow containers scroll horizontally instead.
+  const layout = useMemo(() => buildTree(), []);
 
-  const layout = useMemo(() => buildTree(availableWidth), [availableWidth]);
-
-  const legend = (["exec", "cloud", "wics", "ds", "chairs"] as GroupKey[]).map((k) => ({
-    key: k,
-    name: GROUP_NAME[k],
-    tag: `${BRANCH_NAME[k]} · ${by(k).length}`,
-    color: PALETTE[k],
-  }));
+  // const legend = (["exec", "cloud", "wics", "ds", "chairs"] as GroupKey[]).map((k) => ({
+  //   key: k,
+  //   name: GROUP_NAME[k],
+  //   tag: `${BRANCH_NAME[k]} · ${by(k).length}`,
+  //   color: PALETTE[k],
+  // }));
 
   return (
     <div id="leadership" className="scroll-anchor" style={{  background: "oklch(0.17 0.025 255)", color: "oklch(0.95 0.01 250)", fontFamily: "'IBM Plex Sans',system-ui,sans-serif" }}>
@@ -522,13 +509,13 @@ export default function LeadershipTree() {
         </h2>
       </header>
 
-      <div ref={scrollRef} style={{ overflow: "auto", padding: "6px 26px 24px", display: "flex", justifyContent: "center" }}>
+      <div style={{ overflow: "auto", padding: "6px 26px 24px" }}>
         <div
           style={{
             position: "relative",
             width: layout.width,
             height: layout.height,
-            flex: "0 0 auto",
+            margin: "0 auto",
             backgroundImage: "radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)",
             backgroundSize: "26px 26px",
             borderRadius: 14,

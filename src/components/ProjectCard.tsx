@@ -28,7 +28,7 @@ const ProjectCard = (props: ProjectCardProps) => {
 
       <div className="flex flex-col gap-2">
         <h3 className="font-display font-bold text-3xl">{props.name}</h3>
-        <p className="font-sans text-sm">{props.description}</p>
+        <p className="font-mono text-sm">{props.description}</p>
         <div className="flex flex-wrap gap-2">
           {props.tags.map((tag) => (
             <TechTag key={tag} label={tag} />

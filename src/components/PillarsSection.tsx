@@ -1,12 +1,12 @@
 import SectionHeader from "./SectionHeader";
 import PillarCard from "./PillarCard";
-import { pillarsData } from "../assets/data/config";
+import { pillarsData, PillarBgColor } from "../assets/data/config";
 
 interface PillarsSectionProps {
   pillars?: {
     number: string;
     title: string;
-    bgColor: "garnet" | "gold" | "ink" | "cream";
+    bgColor: PillarBgColor;
     body: string;
     clickText:string;
     link:string;

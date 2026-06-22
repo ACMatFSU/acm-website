@@ -26,7 +26,16 @@ export const heroSectionData = {
 }
 
 // Pillar card data
-export const pillarsData = [
+export type PillarBgColor = "garnet" | "gold" | "ink" | "cream";
+
+export const pillarsData: {
+    number: string;
+    title: string;
+    bgColor: PillarBgColor;
+    body: string;
+    clickText: string;
+    link: string;
+}[] = [
     {
         number: "01",
         title: "Network",
