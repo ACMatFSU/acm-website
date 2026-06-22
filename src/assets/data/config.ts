@@ -49,7 +49,7 @@ export const pillarsData = [
         bgColor: "ink",
         body: "Attend workshops to explore the latest tech and industry topics or learn how to be successful in the professional world.",
         clickText: "Instagram",
-        link: discordLink,
+        link: instaLink,
     },
     {
         number: "04",
@@ -57,7 +57,7 @@ export const pillarsData = [
         bgColor: "cream",
         body: "Prepare for technical interviews with our weekly practice sessions where we go over a variety of coding problems and solutions.",
         clickText: "Discord",
-        link: instaLink,
+        link: discordLink,
     },
 ]
 
@@ -98,7 +98,6 @@ export interface Leader {
   linkedin: string;
   photo: string; // path/URL to a headshot; leave "" to show the placeholder
 }
-
 
 import Carter from "../headshots/carter.jpeg"
 import Darya from "../headshots/darya.jpeg"
