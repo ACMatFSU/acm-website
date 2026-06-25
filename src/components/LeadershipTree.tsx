@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import SectionHeader from "./SectionHeader"
 import { Leaders } from "../assets/data/config"
 /* ------------------------------------------------------------------ *
  * Leadership Tree — Binary Tree view
@@ -503,12 +502,6 @@ export default function LeadershipTree() {
 
   const layout = useMemo(() => buildTree(availableWidth), [availableWidth]);
 
-  const legend = (["exec", "cloud", "wics", "ds", "chairs"] as GroupKey[]).map((k) => ({
-    key: k,
-    name: GROUP_NAME[k],
-    tag: `${BRANCH_NAME[k]} · ${by(k).length}`,
-    color: PALETTE[k],
-  }));
 
   return (
     <div id="leadership" className="scroll-anchor" style={{  background: "oklch(0.17 0.025 255)", color: "oklch(0.95 0.01 250)", fontFamily: "'IBM Plex Sans',system-ui,sans-serif" }}>
