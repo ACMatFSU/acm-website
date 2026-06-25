@@ -59,7 +59,7 @@ export const pillarsData = [
         clickText: "Discord",
         link: discordLink,
     },
-]
+] as const;
 
 import smartGalleryImg from "../projects/smartgallery.jpg";
 import acmWebsiteImg from "../projects/acmSite.jpg"

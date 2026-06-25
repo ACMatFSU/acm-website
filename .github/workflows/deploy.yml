@@ -3,7 +3,7 @@ name: Deploy React App to cPanel
 on:
   push:
     branches:
-      - prod # Triggers the workflow on pushes to the main branch
+      - prod
 
 jobs:
   build-and-deploy:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment with caching for faster builds
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,19 +27,18 @@ jobs:
           npm ci
           npm run build
 
-      # Step 4: Deploy to A2 Hosting via rsync over SSH
-      - name: Deploy Assets via rsync
-        uses: Burnett01/rsync-deployments@v7.0.1
+      # Step 4: Deploy to A2 Hosting via Secure FTP
+      - name: Deploy Assets via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          switches: -avzr --delete
-          rsh: ssh -p 2200 # A2 Hosting standard SSH port
-          path: dist/ # ⚠️ Change to 'build/' if your project is not using Vite
-          remote_path: /home/fsu/public_html/
-          remote_host: ${{ secrets.DEPLOY_HOST }}
-          remote_user: ${{ secrets.DEPLOY_USER }}
-          remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
-          remote_pass: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+          server: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_FTP_PASSWORD }} # Uses the new secret you just created
+          port: 21 # Connects through standard cPanel FTP channels
+          local-dir: ./dist/
+          server-dir: ./public_html/
+          # Keeps your backend routes and cPanel system folders perfectly safe
           exclude: |
-            .well-known/
-            .tmb/
-            .htaccess
+            **/.well-known/**
+            **/.tmb/**
+            **/.htaccess
