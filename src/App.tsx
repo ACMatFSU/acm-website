@@ -5,6 +5,7 @@ import SponsorSection from "./components/SponsorSection";
 import JoinSection from "./components/JoinSection"
 import LeadershipTree from "./components/LeadershipTree"
 import FloatingIsland from "./components/FloatingIsland"
+import FooterSection from "./components/FooterSection";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <ProjectSection />
       <SponsorSection />
       <JoinSection />
+      <FooterSection />
       
     </div>
   );
