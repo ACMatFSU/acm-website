@@ -9,34 +9,36 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    # Keeps Node 24 runners happy without deprecation notices
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
     steps:
+      # Step 1: Check out the repository code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
+      # Step 3: Install dependencies and build production assets
       - name: Install Dependencies & Build
         run: |
           npm ci
           npm run build
 
-      - name: Deploy Assets via rsync
-        uses: easingthemes/ssh-deploy@v5.1.0
+      # Step 4: Deploy to A2 Hosting via Secure FTP
+      - name: Deploy Assets via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          ARGS: -avzr --delete
-          # Verified: easingthemes expects a clean, comma-separated string without extra spaces or inner quotes
-          EXCLUDE: "/.well-known/,/.tmb/,/.htaccess"
-          SOURCE: "dist/" # Leave as dist/ for Vite, switch to build/ if needed
-          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
-          REMOTE_PORT: "22" # Shifting to standard SSH port 22
-          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
-          TARGET: /home/fsu/public_html/
+          server: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_FTP_PASSWORD }} # Uses the new secret you just created
+          port: 21 # Connects through standard cPanel FTP channels
+          local-dir: ./dist/
+          server-dir: ./public_html/
+          # Keeps your backend routes and cPanel system folders perfectly safe
+          exclude: |
+            **/.well-known/**
+            **/.tmb/**
+            **/.htaccess
