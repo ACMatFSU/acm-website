@@ -3,39 +3,37 @@ name: Deploy React App to cPanel
 on:
   push:
     branches:
-      - prod # Triggers the workflow on pushes to the prod branch
+      - prod
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # Step 3: Install dependencies and build production assets
       - name: Install Dependencies & Build
         run: |
           npm ci
           npm run build
 
-      # Step 4: Deploy to A2 Hosting via rsync over SSH
       - name: Deploy Assets via rsync
-        uses: Burnett01/rsync-deployments@v8
+        uses: burnett01/rsync-deployments@v8 # Points cleanly to the v8 major release branch
         with:
-          # Pass exclusions inline directly inside the rsync switches string to prevent accidental deletion
+          # Exclusions are completely safe inside the switches string to avoid wiping server directories
           switches: -avzr --delete --exclude=".well-known/" --exclude=".tmb/" --exclude=".htaccess"
-          path: dist/ # Change to 'build/' if your framework isn't using Vite
+          path: dist/ 
           remote_path: /home/fsu/public_html/
           remote_host: ${{ secrets.DEPLOY_HOST }}
-          remote_port: 2200 # A2 Hosting standard custom port passed cleanly here
+          remote_port: 2200
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          strict_hostkeys_checking: "false"
+          legacy_allow_rsa_hostkeys: "true" # Forces compliance if cPanel uses an older RSA algorithm
