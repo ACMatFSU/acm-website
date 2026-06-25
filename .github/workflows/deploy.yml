@@ -37,3 +37,4 @@ jobs:
           remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
           strict_hostkeys_checking: "false"
           legacy_allow_rsa_hostkeys: "true" # Forces compliance if cPanel uses an older RSA algorithm
+          debug: "true"
