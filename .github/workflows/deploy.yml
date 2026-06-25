@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment with caching for faster builds
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,17 +29,13 @@ jobs:
 
       # Step 4: Deploy to A2 Hosting via rsync over SSH
       - name: Deploy Assets via rsync
-        uses: Burnett01/rsync-deployments@v7 # 👈 Fixed version tag here
+        uses: Burnett01/rsync-deployments@v8
         with:
-          switches: -avzr --delete
-          rsh: ssh -p 2200 
-          path: dist/ # Change to 'build/' if your project doesn't use Vite
+          # Pass exclusions inline directly inside the rsync switches string to prevent accidental deletion
+          switches: -avzr --delete --exclude=".well-known/" --exclude=".tmb/" --exclude=".htaccess"
+          path: dist/ # Change to 'build/' if your framework isn't using Vite
           remote_path: /home/fsu/public_html/
           remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_port: 2200 # A2 Hosting standard custom port passed cleanly here
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
-          # ❌ Removed remote_pass completely since your key has no passphrase
-          exclude: |
-            .well-known/
-            .tmb/
-            .htaccess
