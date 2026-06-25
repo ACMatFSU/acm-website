@@ -3,39 +3,43 @@ name: Deploy React App to cPanel
 on:
   push:
     branches:
-      - prod
+      - prod # Triggers the workflow on pushes to the prod branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the repository code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
+      # Step 3: Install dependencies and build production assets
       - name: Install Dependencies & Build
         run: |
           npm ci
           npm run build
 
+      # Step 4: Deploy to A2 Hosting via rsync over SSH using easingthemes action
       - name: Deploy Assets via rsync
-        uses: burnett01/rsync-deployments@v8 # Points cleanly to the v8 major release branch
+        uses: easingthemes/ssh-deploy@v5.1.0
         with:
-          # Exclusions are completely safe inside the switches string to avoid wiping server directories
-          switches: -avzr --delete --exclude=".well-known/" --exclude=".tmb/" --exclude=".htaccess"
-          path: dist/ 
-          remote_path: /home/fsu/public_html/
-          remote_host: ${{ secrets.DEPLOY_HOST }}
-          remote_port: 2200
-          remote_user: ${{ secrets.DEPLOY_USER }}
-          remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
-          remote_key_pass: ""
-          strict_hostkeys_checking: "false"
-          legacy_allow_rsa_hostkeys: "true" # Forces compliance if cPanel uses an older RSA algorithm
-          debug: "true"
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          ARGS: -avzr --delete
+          SOURCE: "dist/" # ⚠️ Leave as dist/ for Vite, change to build/ if needed
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_PORT: "2200" # Standard A2 custom SSH port
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          TARGET: /home/fsu/public_html/
+          # Safely protect cPanel and frontend routing configuration from being purged
+          EXCLUDE: |
+            /.well-known/
+            /.tmb/
+            /.htaccess
