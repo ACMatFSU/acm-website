@@ -35,6 +35,7 @@ jobs:
           remote_port: 2200
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          remote_key_pass: ""
           strict_hostkeys_checking: "false"
           legacy_allow_rsa_hostkeys: "true" # Forces compliance if cPanel uses an older RSA algorithm
           debug: "true"
