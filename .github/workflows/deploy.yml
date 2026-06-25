@@ -3,7 +3,7 @@ name: Deploy React App to cPanel
 on:
   push:
     branches:
-      - prod # Triggers the workflow on pushes to the main branch
+      - prod # Triggers the workflow on pushes to the prod branch
 
 jobs:
   build-and-deploy:
@@ -29,16 +29,16 @@ jobs:
 
       # Step 4: Deploy to A2 Hosting via rsync over SSH
       - name: Deploy Assets via rsync
-        uses: Burnett01/rsync-deployments@v7.0.1
+        uses: Burnett01/rsync-deployments@v7 # 👈 Fixed version tag here
         with:
           switches: -avzr --delete
-          rsh: ssh -p 2200 # A2 Hosting standard SSH port
-          path: dist/ # ⚠️ Change to 'build/' if your project is not using Vite
+          rsh: ssh -p 2200 
+          path: dist/ # Change to 'build/' if your project doesn't use Vite
           remote_path: /home/fsu/public_html/
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_SSH_KEY }}
-          remote_pass: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+          # ❌ Removed remote_pass completely since your key has no passphrase
           exclude: |
             .well-known/
             .tmb/
