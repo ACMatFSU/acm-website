@@ -3,43 +3,40 @@ name: Deploy React App to cPanel
 on:
   push:
     branches:
-      - prod # Triggers the workflow on pushes to the prod branch
+      - prod
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # Keeps Node 24 runners happy without deprecation notices
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
     steps:
-      # Step 1: Check out the repository code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # Step 3: Install dependencies and build production assets
       - name: Install Dependencies & Build
         run: |
           npm ci
           npm run build
 
-      # Step 4: Deploy to A2 Hosting via rsync over SSH using easingthemes action
       - name: Deploy Assets via rsync
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           ARGS: -avzr --delete
-          SOURCE: "dist/" # ⚠️ Leave as dist/ for Vite, change to build/ if needed
+          # Verified: easingthemes expects a clean, comma-separated string without extra spaces or inner quotes
+          EXCLUDE: "/.well-known/,/.tmb/,/.htaccess"
+          SOURCE: "dist/" # Leave as dist/ for Vite, switch to build/ if needed
           REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
-          REMOTE_PORT: "2200" # Standard A2 custom SSH port
+          REMOTE_PORT: "22" # Shifting to standard SSH port 22
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
           TARGET: /home/fsu/public_html/
-          # Safely protect cPanel and frontend routing configuration from being purged
-          EXCLUDE: |
-            /.well-known/
-            /.tmb/
-            /.htaccess
